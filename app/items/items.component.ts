@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Item } from 'app/shared/item';
-import { ItemService } from 'app/shared/item.service';
+import { Item } from '../shared/item';
+import { ItemService } from '../shared/item.service';
 
 @Component({
   selector: 'items',
-  templateUrl: 'app/items/items.component.html',
-  styleUrls:  ['app/items/items.component.css']
+  templateUrl: 'app/items/items.component.html'
 })
 export class ItemsComponent implements OnInit {
   constructor(private itemService: ItemService) { }

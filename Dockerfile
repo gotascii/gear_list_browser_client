@@ -3,16 +3,21 @@ MAINTAINER Justin Marney <gotascii@gmail.com>
 
 RUN apt-get update
 
-RUN mkdir -p /opt/gear_list_web_client
-WORKDIR /opt/gear_list_web_client
-
 RUN useradd -ms /bin/bash gotascii
+
+RUN mkdir -p /opt/gear_list_web_client
 RUN chown gotascii:gotascii /opt/gear_list_web_client
+WORKDIR /opt/gear_list_web_client
 
 # Copy app such that container runs w/o mounted volume.
 # When mounting local volume, dir is shadowed.
 COPY . ./
-RUN chown gotascii:gotascii \.* *
+RUN chown -R gotascii:gotascii \.* *
+
+# Copying everything, followed by package.json, prevents having to copy the
+# entire app everytime a new dependency is added.
+COPY package.json ./
+RUN chown gotascii:gotascii package.json
 
 USER gotascii
 

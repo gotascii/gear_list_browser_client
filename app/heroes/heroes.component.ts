@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
-import { Hero } from 'app/shared/hero';
-import { HeroDetailComponent } from 'app/hero-detail/hero-detail.component';
-import { HeroService } from 'app/shared/hero.service';
+
+import { Hero } from '../shared/hero';
+import { HeroService } from '../shared/hero.service';
+import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
 
 @Component({
   selector: 'my-heroes',
