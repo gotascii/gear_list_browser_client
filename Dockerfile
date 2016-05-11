@@ -1,6 +1,8 @@
 FROM node:6.0.0
 MAINTAINER Justin Marney <gotascii@gmail.com>
 
+EXPOSE 3000 3001
+
 RUN apt-get update
 
 RUN useradd -ms /bin/bash gotascii
