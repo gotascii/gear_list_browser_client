@@ -1,0 +1,29 @@
+lite-server & Browsersync
+---
+lite-server is a small wrapper around Browsersync. It configures bs to serve
+static files out of the local directory and automatically reloads any connected
+browsers whenever it detects any changes. It does this by injecting a js lib
+after the body tag of all served .html assets. The lib connects to a shared
+websocket and listens for commands. Browsersync also provides a UI that also
+connects to the same websocket and issues commands such as reload.
+
+bs-config.json
+---
+Contains browsersync configuration that causes the browsersync ui, which runs
+in the browser, to connect to the websocket through haproxy.
+
+typings.json
+---
+Many js libraries have features and syntax that the Typescript compiler doesn't
+recognize natively. Typescript definition files (...d.ts) are used to inform the
+compiler about these js libraries. Not all npm packages include these definition
+files. The Typings tool scans installed npm packages and creates definition
+files where necessary by running `npm typings install`. References to created
+definition files are automatically stored in typings.json.
+
+When adding js library dependencies to the app, first add then to package.json.
+Then, run `npm install`. The package.json defines a `postinstall` hook that will
+automatically run `typings install`. Finally, configure systemjs such that it
+can locate the primary .js file in the library. The map will usually point to
+the /dist directory. The package config will usually point main to
+lib-name.min.js and will have the defaultExtension set to 'js'.

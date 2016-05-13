@@ -7,9 +7,9 @@ RUN apt-get update
 
 RUN useradd -ms /bin/bash gotascii
 
-RUN mkdir -p /opt/gear_list_web_client
-RUN chown gotascii:gotascii /opt/gear_list_web_client
-WORKDIR /opt/gear_list_web_client
+RUN mkdir -p /opt/gear_list_browser_client
+RUN chown gotascii:gotascii /opt/gear_list_browser_client
+WORKDIR /opt/gear_list_browser_client
 
 # Copy app such that container runs w/o mounted volume.
 # When mounting local volume, dir is shadowed.
