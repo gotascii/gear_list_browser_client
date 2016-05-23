@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import JSData from 'js-data';
+import { JsonApiAdapter } from 'js-data-jsonapi';
 
 // import { HeroesComponent } from './heroes.component';
 // import { HeroDetailComponent } from './hero-detail.component';
@@ -56,6 +58,8 @@ import { ItemsComponent } from './items/items.component';
   ]
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title: 'Gear List';
+  ngOnInit() {
+  }
 }

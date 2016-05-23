@@ -25,4 +25,4 @@ USER gotascii
 
 RUN npm install
 
-CMD ["npm", "run", "lite"]
+CMD ["npm", "start"]
