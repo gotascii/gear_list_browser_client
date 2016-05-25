@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OpaqueToken, provide } from '@angular/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import JSData from 'js-data';
 import { JsonApiAdapter } from 'js-data-jsonapi';
 
-// import { HeroesComponent } from './heroes.component';
-// import { HeroDetailComponent } from './hero-detail.component';
-// import { DashboardComponent } from './dashboard.component';
-// import { HeroService } from './hero.service';
-// import { LittleTourComponent } from './little-tour.component';
 import { ItemService } from './shared/item.service';
+import { FunctionService } from './shared/function.service';
 import { ItemsComponent } from './items/items.component';
+
+const GEAR_LIST_DATASTORE_ADAPTER = new OpaqueToken('GEAR_LIST_DATASTORE_ADAPTER');
 
 @RouteConfig([
   {
@@ -40,7 +38,6 @@ import { ItemsComponent } from './items/items.component';
   //   component: LittleTourComponent
   // }
 ])
-
 @Component({
   selector: 'gear-list',
   template: `
@@ -53,13 +50,25 @@ import { ItemsComponent } from './items/items.component';
   directives: [ROUTER_DIRECTIVES],
   providers: [
     ROUTER_PROVIDERS,
-    // HeroService,
-    ItemService
+    provide(GEAR_LIST_DATASTORE_ADAPTER, {
+      useValue: new JsonApiAdapter({ basePath: 'http://api.gear-list.com' })
+    }),
+    provide('DATASTORE', {
+      useFactory: function(adapter:JSData.IDSAdapter) {
+        let ds = new JSData.DS();
+        ds.registerAdapter('GEAR_LIST_DATASTORE_ADAPTER', adapter, { default: true });
+        return ds;
+      },
+      deps: [GEAR_LIST_DATASTORE_ADAPTER]
+    }),
+    ItemService,
+    FunctionService
   ]
 })
 
 export class AppComponent implements OnInit {
   title: 'Gear List';
+
   ngOnInit() {
   }
 }
