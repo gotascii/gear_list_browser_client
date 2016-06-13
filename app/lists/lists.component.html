@@ -1,0 +1,17 @@
+<list-form-component [lists$]="lists$" (listFormSubmit)="onFormSubmit($event)"></list-form-component>
+<table class="table table-striped table-hover">
+  <thead class="thead-default">
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let list of lists$ | async">
+      <td>{{list.name | uppercase}}</td>
+      <td style="text-align: right;">
+        <button type="button" class="btn btn-primary" (click)="onDeleteClick(list.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

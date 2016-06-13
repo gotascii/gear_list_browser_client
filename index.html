@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Angular 2 QuickStart</title>
+    <title>Gear List</title>
     <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap.css">
 
     <!-- 1. Load libraries -->
@@ -17,8 +17,11 @@
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
-    <script src="node_modules/js-data/dist/js-data.min.js"></script>
-    <script src="node_modules/js-data-http/dist/js-data-http.min.js"></script>
+
+    <!-- SystemJS can/does load the following, however it does not load them in
+    the right order. --!>
+    <script src="node_modules/js-data/dist/js-data.js"></script>
+    <script src="node_modules/js-data-http/dist/js-data-http.js"></script>
     <script src="node_modules/js-data-jsonapi/dist/js-data-jsonapi.js"></script>
 
     <!-- 2. Configure SystemJS -->
@@ -31,7 +34,11 @@
 
   <!-- 3. Display the application -->
   <body>
-    <gear-list>Loading...</gear-list>
+    <div class="container">
+
+
+      <gear-list>Loading...</gear-list>
+    </div>
   </body>
 </html>
 
