@@ -13,23 +13,23 @@ import {
 import { Observable } from 'rxjs/Rx';
 
 @Component({
-  selector: "list-form-component",
-  templateUrl: 'app/lists/list-form.component.html',
+  selector: "pick-form-component",
+  templateUrl: 'app/picks/pick-form.component.html',
   directives: [FORM_DIRECTIVES]
 })
-export class ListFormComponent {
-  @Output() listFormSubmit:EventEmitter<string> = new EventEmitter<string>();
-  @Input() lists$: Observable<any>;
+export class PickFormComponent {
+  @Output() pickFormSubmit:EventEmitter<string> = new EventEmitter<string>();
+  @Input() items$: Observable<any>;
   form: ControlGroup;
 
   constructor(formBuilder: FormBuilder) {
     this.form = formBuilder.group({
-      "name": ["", Validators.required],
-      "fromListId": [null]
+      "itemId": ["", Validators.required],
+      "packed": [false]
     });
   }
 
   onSubmit() {
-    this.listFormSubmit.emit(this.form.value);
+    this.pickFormSubmit.emit(this.form.value);
   }
 }

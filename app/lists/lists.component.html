@@ -8,7 +8,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let list of lists$ | async">
-      <td>{{list.name | uppercase}}</td>
+      <td><a [routerLink]="['List', { id: list.id }]">{{list.name | uppercase}}</a></td>
       <td style="text-align: right;">
         <button type="button" class="btn btn-primary" (click)="onDeleteClick(list.id)">Delete</button>
       </td>

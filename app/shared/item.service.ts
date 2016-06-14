@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
+import { Observable, Subject } from 'rxjs/Rx';
 
 @Injectable()
 export class ItemService {
-
   /*
    * <any> makes me sad, no doubt. The JSData typings indicate that findAll()
    * returns an array of objects that implement <T & DSInstanceShorthands<T>>.
@@ -19,22 +19,46 @@ export class ItemService {
    * returned from findAll(). When data model objects have complex relationship
    * graphs the logic for *how* to hydrate the graph will become complex.
    *
-   * Ultimately, I thought it better to loose type safety here and constrain
+   * Ultimately, I thought it better to lose type safety here and constrain
    * data object interface specification to one place in the code base.
    */
+
+  items$: Observable<any>;
+  onCreate$: Subject<any>;
+  findAllCalled: boolean;
+
   constructor(@Inject('ITEM_RESOURCE') private resource:JSData.DSResourceDefinition<any>) {
+    this.findAllCalled = false;
+    this.onCreate$ = new Subject<any>();
+
+    let created$ = this.onCreate$.
+      flatMap((item) => {
+        return this.resource.create(item);
+      }).share();
+
+    this.items$ = created$.
+      startWith(true).
+      flatMap((x, i) => {
+        if (this.findAllCalled) {
+          return [this.resource.filter({})];
+        } else {
+          this.findAllCalled = true;
+          return this.resource.findAll();
+        }
+      }).
+      map((items) => {
+        return items.sort((a: any, b: any) => {
+          let fa = a.function.name.toUpperCase();
+          let fb = b.function.name.toUpperCase();
+          if (fa < fb) { return -1; }
+          if (fa > fb) { return 1; }
+          return 0;
+        });
+      });
   }
 
-  findAll() {
-    return this.resource.findAll().then(items => {
-      return items.sort((i1, i2) => {
-        let fname1 = i1.function_name();
-        let fname2 = i2.function_name();
-        if (fname1 < fname2) { return -1; }
-        if (fname1 > fname2) { return 1; }
-        return 0;
-      });
-    });
+  create(item: {}) {
+    this.onCreate$.next(item);
   }
 }
 

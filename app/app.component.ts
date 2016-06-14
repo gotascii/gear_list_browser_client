@@ -6,9 +6,12 @@ import { JsonApiAdapter } from 'js-data-jsonapi';
 import { ItemService } from './shared/item.service';
 import { ListService } from './shared/list.service';
 import { FunctionService } from './shared/function.service';
+import { PickService } from './shared/pick.service';
 import { ItemsComponent } from './items/items.component';
 import { ListsComponent } from './lists/lists.component';
+import { ListComponent } from './lists/list.component';
 import { FunctionsComponent } from './functions/functions.component';
+import { FunctionComponent } from './functions/function.component';
 
 const GEAR_LIST_DATASTORE_ADAPTER = new OpaqueToken('GEAR_LIST_DATASTORE_ADAPTER');
 const DATASTORE = new OpaqueToken('DATASTORE');
@@ -26,9 +29,19 @@ const DATASTORE = new OpaqueToken('DATASTORE');
     component: ListsComponent
   },
   {
+    path: '/lists/:id',
+    name: 'List',
+    component: ListComponent
+  },
+  {
     path: '/functions',
     name: 'Functions',
     component: FunctionsComponent
+  },
+  {
+    path: '/functions/:id',
+    name: 'Function',
+    component: FunctionComponent
   }
 ])
 @Component({
@@ -47,12 +60,45 @@ const DATASTORE = new OpaqueToken('DATASTORE');
 
         ds.defineResource({
           name: 'function',
-          endpoint: 'functions'
+          endpoint: 'functions',
+          relations: {
+            hasMany: {
+              item: {
+                localField: 'items',
+                foreignKey: 'function_id'
+              }
+            }
+          }
         });
 
         ds.defineResource({
           name: 'list',
-          endpoint: 'lists'
+          endpoint: 'lists',
+          relations: {
+            hasMany: {
+              pick: {
+                localField: 'picks',
+                foreignKey: 'list_id'
+              }
+            }
+          }
+        });
+
+        ds.defineResource({
+          name: 'pick',
+          endpoint: 'picks',
+          relations: {
+            hasOne: {
+              list: {
+                localField: 'list',
+                localKey: 'list_id'
+              },
+              item: {
+                localField: 'item',
+                localKey: 'item_id'
+              }
+            }
+          }
         });
 
         ds.defineResource({
@@ -64,11 +110,6 @@ const DATASTORE = new OpaqueToken('DATASTORE');
                 localField: 'function',
                 localKey: 'function_id'
               }
-            }
-          },
-          methods: {
-            function_name: function() {
-              return this.function.name;
             }
           }
         });
@@ -89,9 +130,14 @@ const DATASTORE = new OpaqueToken('DATASTORE');
       useFactory: function(store:JSData.DS) { return store.definitions['function'] },
       deps: [DATASTORE]
     }),
+    provide('PICK_RESOURCE', {
+      useFactory: function(store:JSData.DS) { return store.definitions['pick'] },
+      deps: [DATASTORE]
+    }),
     ItemService,
     FunctionService,
-    ListService
+    ListService,
+    PickService
   ]
 })
 

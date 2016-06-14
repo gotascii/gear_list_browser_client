@@ -13,23 +13,25 @@ import {
 import { Observable } from 'rxjs/Rx';
 
 @Component({
-  selector: "list-form-component",
-  templateUrl: 'app/lists/list-form.component.html',
+  selector: "item-form-component",
+  templateUrl: 'app/items/item-form.component.html',
   directives: [FORM_DIRECTIVES]
 })
-export class ListFormComponent {
-  @Output() listFormSubmit:EventEmitter<string> = new EventEmitter<string>();
-  @Input() lists$: Observable<any>;
+export class ItemFormComponent {
+  @Output() itemFormSubmit:EventEmitter<string> = new EventEmitter<string>();
+  @Input() functions$: Observable<any>;
   form: ControlGroup;
 
   constructor(formBuilder: FormBuilder) {
     this.form = formBuilder.group({
       "name": ["", Validators.required],
-      "fromListId": [null]
+      "weight": ["", Validators.required],
+      "functionId": ["", Validators.required]
     });
   }
 
   onSubmit() {
-    this.listFormSubmit.emit(this.form.value);
+    this.itemFormSubmit.emit(this.form.value);
   }
 }
+

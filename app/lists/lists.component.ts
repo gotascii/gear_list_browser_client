@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
+import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { Observable } from 'rxjs/Rx';
 
 import { ListFormComponent } from './list-form.component'
@@ -9,17 +10,14 @@ import { ListService } from '../shared/list.service';
   selector: 'lists',
   templateUrl: 'app/lists/lists.component.html',
   pipes: [UpperCasePipe],
-  directives: [ListFormComponent]
+  directives: [ROUTER_DIRECTIVES, ListFormComponent]
 })
 export class ListsComponent implements OnInit {
-  title: 'Lists';
   lists$: Observable<any>;
-  lists: Array<any>;
 
   constructor(private listService: ListService) { }
 
   ngOnInit() {
-    this.lists = [{id:1, name:'hi'}];
     this.lists$ = this.listService.lists$;
   }
 

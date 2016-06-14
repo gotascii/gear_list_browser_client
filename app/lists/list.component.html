@@ -1,0 +1,12 @@
+<h2 *ngIf="list">{{list.name}}</h2>
+<pick-form-component [items$]="items$" (pickFormSubmit)="onFormSubmit($event)"></pick-form-component>
+<table *ngIf="list" class="table table-striped table-hover">
+  <tbody>
+    <tr *ngFor="let pick of picks$ | async">
+      <td>{{pick.item.function.name | uppercase}}</td>
+      <td>{{pick.item.name}}</td>
+      <td>{{pick.item.weight}}</td>
+      <td>{{pick.packed}}</td>
+    </tr>
+  </tbody>
+</table>

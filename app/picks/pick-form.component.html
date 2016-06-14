@@ -1,0 +1,15 @@
+<form [ngFormModel]="form" (ngSubmit)="onSubmit()">
+  <p>
+    <select ngControl="itemId" class="form-control" style="width:auto; display: inline-block;">
+      <option value=""></option>
+      <option *ngFor="let item of items$ | async" value="{{ item.id }}">
+        {{ item.function.name | uppercase }} {{ item.name }}
+      </option>
+    </select>
+
+    <input style="display: inline-block;" type="checkbox" ngControl="packed">
+
+    <button type="submit" [disabled]="!form.valid">Submit</button>
+  </p>
+</form>
+

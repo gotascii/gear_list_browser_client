@@ -1,0 +1,11 @@
+<h2 *ngIf="func">{{func.name}}</h2>
+<table *ngIf="func" class="table table-striped table-hover">
+  <tbody>
+    <tr *ngFor="let item of func.items">
+      <td>{{func.name | uppercase}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.weight}}</td>
+    </tr>
+  </tbody>
+</table>
+

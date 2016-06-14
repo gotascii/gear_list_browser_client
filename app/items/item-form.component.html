@@ -1,0 +1,15 @@
+<form [ngFormModel]="form" (ngSubmit)="onSubmit()">
+  <p>
+    <input style="display: inline-block;" type="text" ngControl="name">
+    <input style="display: inline-block;" type="text" ngControl="weight">
+    <select ngControl="functionId" class="form-control" style="width:auto; display: inline-block;">
+      <option value=""></option>
+      <option *ngFor="let function of functions$ | async" value="{{ function.id }}">
+        {{ function.name | uppercase }}
+      </option>
+    </select>
+    <button type="submit" [disabled]="!form.valid">Submit</button>
+  </p>
+</form>
+
+

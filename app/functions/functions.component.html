@@ -5,8 +5,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let function of functions">
-      <td>{{function.name}}</td>
+    <tr *ngFor="let function of functions$ | async">
+      <td><a [routerLink]="['Function', { id: function.id }]">{{function.name | uppercase}}</a></td>
     </tr>
   </tbody>
 </table>
