@@ -8,10 +8,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of items$ | async">
-      <td>{{item.function.name | uppercase}}</td>
-      <td>{{item.name}}</td>
-      <td>{{item.weight}}</td>
-    </tr>
+    <tr *ngFor="let item of items$ | async" [item]="item"></tr>
   </tbody>
 </table>
