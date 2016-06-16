@@ -1,17 +1,3 @@
 <td>{{item.function.name | uppercase}}</td>
-<td #itemName [ngSwitch]="editStateManager.activeElement">
-  <template [ngSwitchWhen]="itemName">
-    <input class="inplace-editable" type="text" (click)="onClickItemAttrEdit($event)" [(ngModel)]="item.name" />
-  </template>
-  <template ngSwitchDefault>
-    <div class="inplace-editable" (click)="onClickItemAttr($event)">{{item.name}}</div>
-  </template>
-</td>
-<td #itemWeight [ngSwitch]="editStateManager.activeElement">
-  <template [ngSwitchWhen]="itemWeight">
-    <input class="inplace-editable" type="text" (click)="onClickItemAttrEdit($event)" [(ngModel)]="item.weight" />
-  </template>
-  <template ngSwitchDefault>
-    <div class="inplace-editable" (click)="onClickItemAttr($event)">{{item.weight}}</div>
-  </template>
-</td>
+<td>{{item.name}}</td>
+<td>{{item.weight}}</td>
