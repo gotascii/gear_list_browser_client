@@ -8,7 +8,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>Gear List</title>
-    <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 
     <!-- 1. Load libraries -->
     <!-- Polyfill(s) for older browsers -->
@@ -34,13 +36,14 @@
 
   <!-- 3. Display the application -->
   <body>
-    <div class="container" style="max-width: 720px">
-      <div class="row">
-        <div class="col-xs-12">
-          <gear-list>Loading...</gear-list>
-        </div>
-      </div>
+    <div class="container" style="max-width: 600px">
+      <gear-list>Loading...</gear-list>
     </div>
+    <script>
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+    </script>
   </body>
 </html>
 

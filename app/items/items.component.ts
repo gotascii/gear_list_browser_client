@@ -10,6 +10,11 @@ import { FunctionService } from '../shared/function.service';
 @Component({
   selector: 'items',
   templateUrl: 'app/items/items.component.html',
+  styles: [`
+    th {
+      padding-top: 0;
+    }
+  `],
   pipes: [UpperCasePipe],
   directives: [ItemFormComponent, ItemRowComponent]
 })

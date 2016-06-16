@@ -1,15 +1,26 @@
 <form [ngFormModel]="form" (ngSubmit)="onSubmit()">
-  <p>
-    <input style="display: inline-block;" type="text" ngControl="name">
-    <input style="display: inline-block;" type="text" ngControl="weight">
-    <select ngControl="functionId" class="form-control" style="width:auto; display: inline-block;">
-      <option value=""></option>
-      <option *ngFor="let function of functions$ | async" value="{{ function.id }}">
-        {{ function.name | uppercase }}
-      </option>
-    </select>
-    <button type="submit" [disabled]="!form.valid">Submit</button>
-  </p>
+  <div class="row valign-wrapper">
+
+    <div class="col s4">
+      <input placeholder="Name" type="text" ngControl="name">
+    </div>
+
+    <div class="col s2">
+      <input placeholder="Weight" step="0.01" class="validate" type="number" ngControl="weight">
+    </div>
+
+    <div class="col s3 center-align">
+      <select id="functionId" ngControl="functionId">
+        <option value="" disabled selected>Function</option>
+        <option *ngFor="let function of functions" value="{{ function.id }}">
+          {{ function.name | uppercase }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col s3 right-align">
+      <button class="btn waves-effect waves-light" [ngClass]="{disabled: !form.valid}" type="submit" [disabled]="!form.valid">Submit </button>
+    </div>
+
+  </div>
 </form>
-
-
