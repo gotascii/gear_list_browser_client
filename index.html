@@ -8,42 +8,63 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>Gear List</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+    <!-- Materialize --!>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css" />
+    <link rel="stylesheet" href="/node_modules/materialize-css/dist/css/materialize.css" media="screen,projection" />
+    <link rel="stylesheet" href="/node_modules/mdi/css/materialdesignicons.min.css" media="all" />
+
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/materialize-css/dist/js/materialize.min.js"></script>
 
     <!-- 1. Load libraries -->
     <!-- Polyfill(s) for older browsers -->
-    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-
-    <script src="node_modules/zone.js/dist/zone.js"></script>
-    <script src="node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="/node_modules/zone.js/dist/zone.js"></script>
+    <script src="/node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="/node_modules/systemjs/dist/system.src.js"></script>
 
     <!-- SystemJS can/does load the following, however it does not load them in
     the right order. --!>
-    <script src="node_modules/js-data/dist/js-data.js"></script>
-    <script src="node_modules/js-data-http/dist/js-data-http.js"></script>
-    <script src="node_modules/js-data-jsonapi/dist/js-data-jsonapi.js"></script>
+    <script src="/node_modules/js-data/dist/js-data.js"></script>
+    <script src="/node_modules/js-data-http/dist/js-data-http.js"></script>
+    <script src="/node_modules/js-data-jsonapi/dist/js-data-jsonapi.js"></script>
 
     <!-- 2. Configure SystemJS -->
-    <script src="systemjs.config.js"></script>
+    <script src="/systemjs.config.js"></script>
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
+
+    <style>
+      body,html {
+        overflow-x: hidden;
+      }
+      body {
+        background-color: #eaeaea;
+      }
+      form ul.dropdown-content.select-dropdown li span {
+        font-size: 14px;
+      }
+      div.select-wrapper {
+        width: 100%;
+      }
+      .container .row {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
 
   </head>
 
   <!-- 3. Display the application -->
   <body>
-    <div class="container" style="max-width: 600px">
-      <gear-list>Loading...</gear-list>
+    <div class="container" style="width:100%;">
+      <div style="width:100vw;transition:.35s">
+        <gear-list>Loading...</gear-list>
+      </div>
     </div>
-    <script>
-      $(document).ready(function() {
-        $('select').material_select();
-      });
-    </script>
   </body>
 </html>
 

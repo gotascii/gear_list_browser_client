@@ -13,8 +13,7 @@ import {
   Validators
 } from '@angular/common';
 import { Observable, Subscription } from 'rxjs/Rx';
-
-declare var jQuery:any;
+import { MaterializeDirective } from "angular2-materialize";
 
 @Component({
   selector: "item-form-component",
@@ -24,7 +23,7 @@ declare var jQuery:any;
       margin-bottom: 0;
     }
   `],
-  directives: [FORM_DIRECTIVES]
+  directives: [FORM_DIRECTIVES, MaterializeDirective]
 })
 export class ItemFormComponent {
   @Output() itemFormSubmit:EventEmitter<string> = new EventEmitter<string>();
@@ -44,7 +43,6 @@ export class ItemFormComponent {
   ngOnInit() {
     this.subscription = this.functions$.subscribe((functions) => {
       this.functions = functions;
-      jQuery('select').material_select();
     });
   }
 

@@ -1,12 +1,28 @@
-<h2 *ngIf="list">{{list.name}}</h2>
-<pick-form-component [items$]="items$" (pickFormSubmit)="onFormSubmit($event)"></pick-form-component>
-<table *ngIf="list" class="table table-striped table-hover">
-  <tbody>
-    <tr *ngFor="let pick of picks$ | async">
-      <td>{{pick.item.function.name | uppercase}}</td>
-      <td>{{pick.item.name}}</td>
-      <td>{{pick.item.weight}}</td>
-      <td>{{pick.packed}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="fixed-action-btn" style="position: fixed; bottom: 24px; right: 24px;">
+  <a materialize="leanModal" href="#modal1" class="btn-floating waves-effect waves-light btn-large green z-depth-2 modal-trigger">
+    <i class="large material-icons">add</i>
+  </a>
+</div>
+
+<div id="modal1" class="modal bottom-sheet">
+  <pick-form-component [items$]="items$" (pickFormSubmit)="onFormSubmit($event)"></pick-form-component>
+</div>
+
+<div [materializeDropdownStream]="picks$">
+  <item-card *ngFor="let pick of picks$ | async" [item]="pick.item">
+    <action>
+      <div style="width:60px;display:flex">
+        <a class="btn-flat btn-floating btn-large waves-effect waves-light teal accent-4">
+          <i class="material-icons">work</i>
+        </a>
+      </div>
+    </action>
+    <dropdown-ul>
+      <li><a href="#!">Edit {{pick.id}}</a></li>
+      <li><a href="#!" (click)="omg()">Delete</a></li>
+    </dropdown-ul>
+  </item-card>
+</div>
+
+
+

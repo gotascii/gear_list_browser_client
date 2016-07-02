@@ -1,7 +1,9 @@
-import { Component, OnInit, OpaqueToken, provide } from '@angular/core';
+import { Component, OpaqueToken, provide } from '@angular/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import JSData from 'js-data';
 import { JsonApiAdapter } from 'js-data-jsonapi';
+import { MaterializeDirective } from "angular2-materialize";
+import { Title } from '@angular/platform-browser';
 
 import { ItemService } from './shared/item.service';
 import { ListService } from './shared/list.service';
@@ -12,6 +14,7 @@ import { ListsComponent } from './lists/lists.component';
 import { ListComponent } from './lists/list.component';
 import { FunctionsComponent } from './functions/functions.component';
 import { FunctionComponent } from './functions/function.component';
+import { NavComponent } from './nav/nav.component';
 
 const GEAR_LIST_DATASTORE_ADAPTER = new OpaqueToken('GEAR_LIST_DATASTORE_ADAPTER');
 const DATASTORE = new OpaqueToken('DATASTORE');
@@ -47,7 +50,7 @@ const DATASTORE = new OpaqueToken('DATASTORE');
 @Component({
   selector: 'gear-list',
   templateUrl: 'app/app.component.html',
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ ROUTER_DIRECTIVES, NavComponent ],
   providers: [
     ROUTER_PROVIDERS,
     provide(GEAR_LIST_DATASTORE_ADAPTER, {
@@ -141,9 +144,4 @@ const DATASTORE = new OpaqueToken('DATASTORE');
   ]
 })
 
-export class AppComponent implements OnInit {
-  title: 'Gear List';
-
-  ngOnInit() {
-  }
-}
+export class AppComponent { }

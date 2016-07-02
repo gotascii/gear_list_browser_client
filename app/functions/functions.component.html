@@ -1,12 +1,8 @@
-<table class="table table-striped table-hover">
-  <thead class="thead-default">
-    <tr>
-      <th>Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let function of functions$ | async">
-      <td><a [routerLink]="['Function', { id: function.id }]">{{function.name | uppercase}}</a></td>
-    </tr>
-  </tbody>
-</table>
+<div>
+  <function-card *ngFor="let func of functions$ | async" [func]="func">
+    <dropdown-ul>
+      <li><a href="#!">Edit {{func.id}}</a></li>
+      <li><a href="#!" (click)="omg()">Delete</a></li>
+    </dropdown-ul>
+  </function-card>
+</div>

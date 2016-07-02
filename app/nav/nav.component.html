@@ -1,0 +1,40 @@
+<div class="nav-wrapper light-blue">
+
+  <a class="brand-logo" href="#">{{ titleService.getTitle() }}</a>
+
+  <a href="#" style="padding-left: 10px" data-activates="mobile-demo" materialize="sideNav" class="button-collapse">
+    <i class="material-icons">menu</i>
+  </a>
+
+  <ul class="side-nav" style="width: 200px; box-shadow: none;" id="mobile-demo">
+    <li style="text-align: center">
+      <a class="nav-link" style="padding: 0">
+        <div style="line-height: 46px">
+          <span style="font-size: 20px; font-weight: 300">Gear List</span>
+        </div>
+      </a>
+    </li>
+
+    <li>
+      <a (click)="onNav(['Lists'], 'My Lists')" class="nav-link valign-wrapper waves-effect">
+        <div class="valign-wrapper">
+          <i class="mdi mdi-view-list"></i><span>My Lists</span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a (click)="onNav(['Items'], 'My Gear')" class="nav-link valign-wrapper waves-effect">
+        <div class="valign-wrapper">
+          <i style="font-size: 21px;" class="mdi mdi-wrench"></i><span>My Gear</span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a (click)="onNav(['Functions'], 'My Categories')" class="nav-link valign-wrapper waves-effect">
+        <div class="valign-wrapper">
+          <i style="font-size: 21px;" class="mdi mdi-folder-multiple"></i><span>My Categories</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,27 @@
+<div (click)="onCardClick(func)" style="width:99%; padding:0; margin: 1px auto 0 auto;" class="row">
+
+  <div class="col s12 card valign-wrapper" style="display:flex; padding:15px;background-color: #fafafa; margin:0; box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.12)">
+
+    <div style="width:60px;display:flex">
+      <a class="btn-flat btn-floating btn-large waves-effect waves-light teal accent-4">
+        <i style="font-size: 32px" class="mdi mdi-folder-multiple"></i>
+      </a>
+    </div>
+
+    <div class="valign-wrapper" style="min-width: 217px; display: block; width: 100%;padding-left:10px;padding-right:7px">
+      <div><span class="truncate" style="font-size:28px;font-weight: 200;">{{func.name}}</span></div>
+      <div>
+        <span style="margin-right:7px;background-color: rgba(0, 0, 0, 0.07); padding: 4px; color: rgba(0,0,0,0.7);font-size: 12px;">
+          12 bags
+        </span>
+        <span style="background-color: rgba(0, 0, 0, 0.07); padding: 4px; color: rgba(0,0,0,0.7);font-size: 12px;">
+          <i class="mdi mdi-scale"></i> 12 lbs 8 oz
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+

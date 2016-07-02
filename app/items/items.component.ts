@@ -1,38 +1,45 @@
-import { Component, OnInit, Renderer, ElementRef, Directive } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
-import { Observable } from 'rxjs/Rx';
+import { Observable, ReplaySubject } from 'rxjs/Rx';
+import { MaterializeDirective } from "angular2-materialize";
+import { Title } from '@angular/platform-browser';
 
 import { ItemFormComponent } from './item-form.component';
-import { ItemRowComponent } from './item-row.component';
+import { ItemCardComponent } from './item-card.component';
 import { ItemService } from '../shared/item.service';
 import { FunctionService } from '../shared/function.service';
+import { MaterializeDropdownStream } from '../shared/materialize-dropdown-stream.directive';
 
 @Component({
   selector: 'items',
   templateUrl: 'app/items/items.component.html',
-  styles: [`
-    th {
-      padding-top: 0;
-    }
-  `],
   pipes: [UpperCasePipe],
-  directives: [ItemFormComponent, ItemRowComponent]
+  directives: [
+    ItemFormComponent,
+    ItemCardComponent,
+    MaterializeDirective,
+    MaterializeDropdownStream
+  ]
 })
 export class ItemsComponent implements OnInit {
   constructor(
+    private titleService: Title,
     private itemService: ItemService,
     private functionService: FunctionService
-  ) { }
+  ) {}
 
-  items$: Observable<any>;
+  items$: ReplaySubject<any>;
   functions$: Observable<any>;
 
   ngOnInit() {
-    this.items$ = this.itemService.items$;
+    this.items$ = this.itemService.items$();
     this.functions$ = this.functionService.functions$;
+    this.titleService.setTitle("My Gear");
   }
 
   onFormSubmit(item) {
     this.itemService.create(item);
   }
+
+  omg(){debugger;}
 }

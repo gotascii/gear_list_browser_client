@@ -1,0 +1,24 @@
+<div style="width:99%; padding:0; margin: 1px auto 0 auto;" class="row">
+
+  <div class="col s12 card valign-wrapper" style="display:flex; padding:15px;background-color: #fafafa; margin:0; box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.12)">
+
+    <ng-content select="action"></ng-content>
+
+    <div class="valign-wrapper" style="min-width: 217px; display: block; padding-left: 10px; padding-right: 7px">
+      <div style="padding-right: 7px"><span class="truncate" style="font-size: 20px; font-weight: 200;">{{item.name}}</span></div>
+      <div>
+        <span style="margin-right:7px;background-color: rgba(0, 0, 0, 0.07); padding: 4px; color: rgba(0,0,0,0.7);font-size: 12px;">{{item.function.name}}</span>
+        <span style="background-color: rgba(0, 0, 0, 0.07); padding: 4px; color: rgba(0,0,0,0.7);font-size: 12px;"><i class="mdi mdi-scale"></i> {{item.weight}} oz</span>
+      </div>
+    </div>
+
+    <div style="position:absolute; top:0;right:0;padding-top: 15px; padding-right:7px">
+      <a class='dropdown-button' style="color: #aaa" href='#' [attr.data-activates]="'dropdown-' + item.id"><i class="material-icons">more_vert</i></a>
+      <ul [attr.id]="'dropdown-' + item.id" class='dropdown-content'>
+        <ng-content select="dropdown-ul"></ng-content>
+      </ul>
+    </div>
+
+  </div>
+
+</div>

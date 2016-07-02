@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable, Subject, BehaviorSubject, ReplaySubject } from 'rxjs/Rx';
 
 @Injectable()
 export class ItemService {
@@ -23,38 +23,54 @@ export class ItemService {
    * data object interface specification to one place in the code base.
    */
 
-  items$: Observable<any>;
-  onCreate$: Subject<any>;
-  findAllCalled: boolean;
+  private _items$: ReplaySubject<any>;
+  private onCreate$: Subject<any>;
+  private onRefresh$: Subject<any>;
 
   constructor(@Inject('ITEM_RESOURCE') private resource:JSData.DSResourceDefinition<any>) {
-    this.findAllCalled = false;
     this.onCreate$ = new Subject<any>();
+    this.onRefresh$ = new Subject<any>();
 
     let created$ = this.onCreate$.
       flatMap((item) => {
         return this.resource.create(item);
       }).share();
 
-    this.items$ = created$.
-      startWith(true).
+    let raw$ = Observable.merge(created$, this.onRefresh$).
       flatMap((x, i) => {
-        if (this.findAllCalled) {
-          return [this.resource.filter({})];
-        } else {
-          this.findAllCalled = true;
-          return this.resource.findAll();
-        }
-      }).
+        return this.resource.findAll({}, {bypassCache: true});
+      });
+
+    let sorted$ = raw$.
       map((items) => {
-        return items.sort((a: any, b: any) => {
+        let sorted = items.sort((a: any, b: any) => {
           let fa = a.function.name.toUpperCase();
           let fb = b.function.name.toUpperCase();
-          if (fa < fb) { return -1; }
-          if (fa > fb) { return 1; }
+
+          let an = a.name.toUpperCase();
+          let bn = b.name.toUpperCase();
+
+          if (fa < fb) return -1;
+          if (fa > fb) return 1;
+          if (an < bn) return -1;
+          if (an > bn) return 1;
+
           return 0;
         });
+        return sorted;
       });
+
+    this._items$ = new ReplaySubject(1);
+    sorted$.subscribe(this._items$);
+  }
+
+  // The ReplaySubject must persist across component lifecycle in order to
+  // cached the sorted set. However, findAll needs to be called once on each
+  // top-level component init and the cached value in ReplaySubject needs to be
+  // refreshed.
+  items$() {
+    this.onRefresh$.next(true);
+    return this._items$;
   }
 
   create(item: {}) {

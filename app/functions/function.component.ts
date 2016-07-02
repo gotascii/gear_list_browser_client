@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
 import { RouteParams, Router } from '@angular/router-deprecated';
+import { Title } from '@angular/platform-browser';
 
 import { FunctionService } from '../shared/function.service';
 
@@ -14,6 +15,7 @@ export class FunctionComponent implements OnInit {
   public func;
 
   constructor(
+    private titleService: Title,
     private routeParams:RouteParams,
     private functionService: FunctionService
   ) { }
@@ -23,6 +25,7 @@ export class FunctionComponent implements OnInit {
 
     this.functionService.function$.subscribe((func) => {
       this.func = func;
+      this.titleService.setTitle(func.name);
     });
 
     this.functionService.find(id);

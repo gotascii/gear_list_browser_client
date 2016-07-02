@@ -11,11 +11,12 @@ import {
   Validators
 } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
+import { MaterializeDirective } from "angular2-materialize";
 
 @Component({
   selector: "list-form-component",
   templateUrl: 'app/lists/list-form.component.html',
-  directives: [FORM_DIRECTIVES]
+  directives: [FORM_DIRECTIVES, MaterializeDirective]
 })
 export class ListFormComponent {
   @Output() listFormSubmit:EventEmitter<string> = new EventEmitter<string>();
