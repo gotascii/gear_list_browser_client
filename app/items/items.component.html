@@ -18,8 +18,12 @@
       </div>
     </action>
     <dropdown-ul>
-      <li><a href="#!">Edit {{item.id}}</a></li>
-      <li><a href="#!" (click)="omg()">Delete</a></li>
+      <li><a>Edit</a></li>
+      <li><a (click)="onDestroy(item)">Delete</a></li>
     </dropdown-ul>
   </item-card>
+</div>
+
+<div style="width: auto; text-align: center; padding: 50px;">
+  <a (click)="onLoadMore()" class="btn waves-effect waves-light">Load More</a>
 </div>

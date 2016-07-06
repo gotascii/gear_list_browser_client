@@ -22,24 +22,44 @@ import { MaterializeDropdownStream } from '../shared/materialize-dropdown-stream
   ]
 })
 export class ItemsComponent implements OnInit {
+  items$: ReplaySubject<any>;
+  onFilter$: Subject<any>;
+  functions$: Observable<any>;
+  page: number;
+  pageSize: number;
+
   constructor(
     private titleService: Title,
     private itemService: ItemService,
     private functionService: FunctionService
-  ) {}
-
-  items$: ReplaySubject<any>;
-  functions$: Observable<any>;
+  ) {
+    this.page = 0;
+    this.pageSize = 20;
+  }
 
   ngOnInit() {
-    this.items$ = this.itemService.items$();
     this.functions$ = this.functionService.functions$;
     this.titleService.setTitle("My Gear");
+
+    let filtered = this.itemService.filtered();
+
+    this.items$ = filtered.stream$;
+    this.onFilter$ = filtered.onFilter$;
+    this.onLoadMore();
   }
 
   onFormSubmit(item) {
     this.itemService.create(item);
   }
 
-  omg(){debugger;}
+  onDestroy(item) {
+    this.itemService.destroy(item);
+  }
+
+  onLoadMore() {
+    this.page += 1;
+    this.onFilter$.next({
+      limit: this.pageSize * this.page
+    });
+  }
 }

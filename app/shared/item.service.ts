@@ -25,10 +25,12 @@ export class ItemService {
 
   private _items$: ReplaySubject<any>;
   private onCreate$: Subject<any>;
+  private onDestroy$: Subject<any>;
   private onRefresh$: Subject<any>;
 
   constructor(@Inject('ITEM_RESOURCE') private resource:JSData.DSResourceDefinition<any>) {
     this.onCreate$ = new Subject<any>();
+    this.onDestroy$ = new Subject<any>();
     this.onRefresh$ = new Subject<any>();
 
     let created$ = this.onCreate$.
@@ -36,7 +38,12 @@ export class ItemService {
         return this.resource.create(item);
       }).share();
 
-    let raw$ = Observable.merge(created$, this.onRefresh$).
+    let destroyed$ = this.onDestroy$.
+      flatMap((item) => {
+        return this.resource.destroy(item);
+      }).share();
+
+    let raw$ = Observable.merge(created$, destroyed$, this.onRefresh$).
       flatMap((x, i) => {
         return this.resource.findAll({}, {bypassCache: true});
       });
@@ -73,8 +80,43 @@ export class ItemService {
     return this._items$;
   }
 
+  filtered() {
+    // findAll is cached by params.
+    // if useFilter is true, filtering of in-memory items is done.
+    // if useFilter is false (default),
+    //   if query is cached, cached results are returned.
+    //   if query is not cached, shit goes down.
+    // this.resource.findAll(
+    //   params:{
+    //     orderBy:[['name', 'DESC']],
+    //     offset: 10,
+    //     limit: 10
+    //   },
+    //   options:{bypassCache, cacheResponse, useFilter}
+    // );
+
+    let onFilter$ = new Subject<any>();
+
+    let filtered$ = onFilter$.flatMap((params) => {
+      return this.resource.findAll(params, { useFilter: true });
+    });
+
+    let raw$ = onFilter$.flatMap((params) => {
+      return this.resource.findAll(params, { bypassCache: true });
+    });
+
+    let stream$ = Observable.merge(filtered$, raw$);
+    let omg$ = new ReplaySubject(1);
+    stream$.subscribe(omg$);
+    return {stream$: omg$, onFilter$: onFilter$};
+  }
+
   create(item: {}) {
     this.onCreate$.next(item);
+  }
+
+  destroy(item: {}) {
+    this.onDestroy$.next(item);
   }
 }
 
